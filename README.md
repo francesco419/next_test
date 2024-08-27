@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### File Conventions
 
-## Getting Started
+> Next.js provides a set of special files to create UI with specific behavior in nested routes:
 
-First, run the development server:
+- **layout** - Shared UI for a segment and its children
+- **page** - Unique UI of a route and make routes publicly accessible
+- **loading** - Loading UI for a segment and its children
+- **not-found** - Not found UI for a segment and its children
+- **error** - Error UI for a segment and its children
+- **global-error** - Global Error UI
+- **route** - Server-side API endpoint
+- **template** - Specialized re-rendered Layout UI
+- **default** - Fallback UI for Parallel Routes
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Parallel Routes
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 각각 다른 2개의 페이지를 한페이지에 디스플레이 할 수 있는 라우팅 기능. ( 대쉬보드 혹은 피드 등 )
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Slot** 이라는 라우트(폴더)를 만듬으로서 이를 이용할 수 있다. **( ex. @team - page.tsx)**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- use
+  - 모달 창
+  - 사용자 설정 라우팅
+  - 탭 그룹
+  - Loading / Error UI
 
-## Learn More
+### Intercepting Routes
 
-To learn more about Next.js, take a look at the following resources:
+- 현재 페이지 레이아웃에서 다른 페이지 레이아웃을 로드 할 수 있도록 하는 **스위칭** 기능.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **ex)** 이미지 오베레이 혹은 모달 창을 띄울때 라우트(주소)가 변경. 라우트가 변경되었지만, **Intercepting Routes** 기능으로 페이지 전환이 아닌 원래 페이지 레이아웃 위에 모달 창을 띄움.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- (.), (..), (..)(..), (...) 와 같은 형식의 이름 폴더를 **Intercepting Routes**를 사용하고자 하는 라우트(폴더)와 이름을 같게 하여 설정. ( ex. photo -> (..)photo )
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+_(...)_ 은 경로 설정에서의 폴더 위치 ( import a from '../../' 처럼)

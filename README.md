@@ -33,3 +33,9 @@
 - (.), (..), (..)(..), (...) 와 같은 형식의 이름 폴더를 **Intercepting Routes**를 사용하고자 하는 라우트(폴더)와 이름을 같게 하여 설정. ( ex. photo -> (..)photo )
 
 _(...)_ 은 경로 설정에서의 폴더 위치 ( import a from '../../' 처럼)
+
+---
+
+project NINE
+
+three, next, react, styled-component, ..

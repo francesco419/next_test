@@ -34,8 +34,116 @@
 
 _(...)_ 은 경로 설정에서의 폴더 위치 ( import a from '../../' 처럼)
 
+### Route
+
+- Route Group : 폴더이름이 (user) 와 같이 사용되며, 이는 라우팅을 설정하는 것이 아닌 페이지들의 그룹을 명시하는 폴더이다. 라우팅 시스템에시는 포함되지 않으며, 단순 명시적 사용을 위해 쓰인다.
+
+- Dynamic Route : params에 의해 정의되는 페이지 라우팅으로, 폴더 이름을 [id] / [slug] 등 으로 한다. 폴더 구성은 param을 받는 폴더의 하위에 폴더를 구성하고 해당 폴더 안에 page.js를 작성한다.
+
+### Layout
+
+- 레이아웃을 각 페이지마다 존재할 수 있으며, App폴더 최상단에 존재하는 (root)layout파일은 다른 layout파일을 포함한다.
+
+  - 하지만 최상단의 layout 파일을 삭제한다면, 각 루트에 존재하는 layout파일이 해당 라우트의 root layout이 된다.
+
+- 레이아웃은 기본적으로 서버 컴포넌트이지만, 클라이언트 컴포넌트로 설정할 수도 있다.
+- 레이아웃에서 데이터 호출이 가능
+- 부모 레이아웃과 자식 레이아웃 간의 데이터 전달은 불가하다.
+- 여러 라우트에 하나의 레이아웃을 적용하고 싶다면, 하위 폴더로 해당 페이지들을 정의하고 상위폴더에 layout을 정의하면 된다.
+
+### Template
+
+- layout과 다르게 새로운 인스턴스를 생성 - DOM 재생성, 상태값 초기화(보존되지 않음 - 클라이언트 컴포넌트에서), effect 초기화
+
+  - child 클라이언트 컴포넌트의 상태 초기화. (페이지 이동시, on navigation)
+
+- layout < template < child 순서의 포괄형태를 가지고 있다.
+
+---
+
+### Fetching Data
+
+- 서버에서 데이터를 가져오기 (권장)
+
+  ```js
+  export default async function Page() {
+    let data = await fetch('url');
+    let posts = await data.json();
+    return <p>{data}</p>;
+  }
+  ```
+
+- DB에서 데이터 가져오기 - 서버와 동일. db접속방법 필요
+  `let data = await db.select().from(posts);`
+
+- 클라이언트에서 데이터 가져오기 - 권장사항은 아니지만 사용가능( useEffect )
+
+- 여러 함수에서 데이터 재사용
+  - fetch를 사용하면 요청이 자동적으로 **memoized**된다. ( 캐싱과 비슷 )
+
+### Data
+
+- 두가지 방법의 데이터 가져오기
+
+  - **parallel** - 라우트에 존재하는 컴포넌트가 일제히 데이터를 불러온다. 총 시간의 단축이 가능하다.
+    - 각 호출 함수를 변수 선언하고 이를 `Promise.all`을 사용한다.
+  - **sequential** - 상위 컴포넌트부터 순서대로 데이터를 fetch.
+    - 기본적인 각 컴포넌트가 필요한 데이터를 불러오는 방식
+
+- 클라이언트에 노출될수 있는 민감한 정보 숨기기
+
+  - Next.js Config `experimental.taint` option to `true`
+  - 데이터 fetching 단계에서 `experimental_taintObjectReference`(데이터 레퍼런스),
+    `experimental_taintUniqueValue`(taint할 데이터 정보)
+
+- server action은 함수 혹은 모듈 레벨에서 정의 가능하다.
+
+  - 서버컴포넌트에서 정의시, 해당 컴포넌트 내부에 함수 정의.
+  - 클라이언트 컴포넌트에서 정의시, `action` 파일을 따로 만들어 `server action`에 대해 정의하고, 컴포넌트에 해당 함수를 `import`하여 사용한다.
+  - 해당 action을 정의한 함수를 prop로 전달이 가능하다. (`<form action={함수}></>`)
+  - mutate - 가져온 데이터의 가공.
+
+  https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
+
 ---
 
 project NINE
 
 three, next, react, styled-component, ..
+
+---
+
+### Benefits of Server Rendering
+
+There are a couple of benefits to doing the rendering work on the server, including:
+
+- **Data Fetching**: Server Components allow you to move data fetching to the server, closer to your data source. This can improve performance by reducing time it takes to fetch data needed for rendering, and the number of requests the client needs to make.
+- **Security**: Server Components allow you to keep sensitive data and logic on the server, such as tokens and API keys, without the risk of exposing them to the client.
+- **Caching**: By rendering on the server, the result can be cached and reused on subsequent requests and across users. This can improve performance and reduce cost by reducing the amount of rendering and data fetching done on each request.
+- **Performance**: Server Components give you additional tools to optimize performance from the baseline. For example, if you start with an app composed of entirely Client Components, moving non-interactive pieces of your UI to Server Components can reduce the amount of client-side JavaScript needed. This is beneficial for users with slower internet or less powerful devices, as the browser has less client-side JavaScript to download, parse, and execute.
+- **Initial Page Load and First Contentful Paint (FCP)**: On the server, we can generate HTML to allow users to view the page immediately, without waiting for the client to download, parse and execute the JavaScript needed to render the page.
+- **Search Engine Optimization and Social Network Shareability**: The rendered HTML can be used by search engine bots to index your pages and social network bots to generate social card previews for your pages.
+- **Streaming**: Server Components allow you to split the rendering work into chunks and stream them to the client as they become ready. This allows the user to see parts of the page earlier without having to wait for the entire page to be rendered on the server.
+
+---
+
+### Static, Dynamic, and Streaming. (server component)
+
+- Static Rendering (Default) : With Static Rendering, routes are rendered at **build time**
+
+  - **static blog post** or a **product page**
+
+- Dynamic Rendering : routes are rendered for each user at **request time**.
+
+  - route has **data that is personalized** to the user or has information that can only be known at request time
+  - automatically change reder method by itself
+  - **Dynamic Functions**
+
+- Streaming : render UI from the server, work is split into chunks and streamed to the client as it becomes ready.
+  - Streaming is built into the Next.js App Router by default.
+  - You can start streaming route segments using `loading.js` and UI components with `React Suspense`.
+
+### Client Rendering
+
+- **Interactivity**: Client Components can use state, effects, and event listeners, meaning they can provide immediate feedback to the user and update the UI.
+- **Browser APIs**: Client Components have access to browser APIs, like geolocation or localStorage.

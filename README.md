@@ -147,3 +147,45 @@ There are a couple of benefits to doing the rendering work on the server, includ
 
 - **Interactivity**: Client Components can use state, effects, and event listeners, meaning they can provide immediate feedback to the user and update the UI.
 - **Browser APIs**: Client Components have access to browser APIs, like geolocation or localStorage.
+
+### Client OR Server Component
+
+- 언제 사용하는가?
+
+  - **Server**
+
+    - 데이터 가져오기
+    - 백엔드 리소스 접근
+    - 클라이언트에서 유출될 수 있는 민감한 정보
+    - 클라이언트의 JS 부담 낮추기, 큰 의존성(dep)은 서버에
+
+  - **Client**
+    - 이벤트 리스너, 사용자 상호작용
+    - 상태, 리액트 라이프사이클 관련
+    - 브라우저-only API사용
+    - 위 3개와 연관/의존성 있는 커스텀훅 사용시
+    - 리액트 클래스 컴포넌트 사용시
+
+- **Server Component Pattern**
+
+  - 서버 컴포넌트간 호출한 데이터 전달/공유
+
+    - 서버 컴포넌트는 React Context와 같은 Hook사용이 불가능하기 때문에, 가져온 데이터를 다른 서버 컴포넌트와 공유하고자 한다면 `fetch` 혹은 `cache` 를 사용하여 서버 컴포넌트간 데이터 전달 및 공유를 통해 같은 호출 함수를 반복사용하지 않아도 되도록 할 수 있다.
+
+  - 서버 only 코드를 클라이언트에서 제외하기
+
+    - `npm install server-only`
+    - `server-only`를 사용해 해당 서버 코드를 클라이언트 컴포넌트에서 사용하지 못하도록 할 수 있다.
+      - 서버에서만 사용하는 `API_KEY`를 실수로 클라이언트에서 작동하도록 하여 유출하는 것을 방지.
+      - `server-only`를 사용하면 서버코드를 클라이언트에 import할시, `build-time error`를 발생시켜 오류를 발생.
+
+  - 외부 라이브러리 사용시
+    - 리액트와 호환하는 외부 라이브러리를 사용시, Next,js와 다르게 'use client'와 같은 명시를 하지 않았지만 `useState`와 같이 클라이언트 컴포넌트에서 쓰이는 것을 사용했기에, 서버 컴포넌트와 같이 사용되지 않고 원래 사용방법에 따라 작동 될 것이다.
+    - 서버 컴포넌트에서 사용시 오류 발생
+    - 서버 컴포넌트에서 사용 할 수 있는 방법도 있으나, 해당 사용법을 예상하지 않았기 때문에 사용을 권장하지 않음.
+
+- **Client Component**
+
+  - 클라이언트 JS 번들 사이즈를 줄이기 위해서 `component tree`로 나누는것을 권장.
+    - 정적 요소를 클라이언트가 아닌 서버 컴포넌트로 구성하여 사용하기.
+    -

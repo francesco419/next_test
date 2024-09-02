@@ -59,7 +59,15 @@ _(...)_ 은 경로 설정에서의 폴더 위치 ( import a from '../../' 처럼
 
 - layout < template < child 순서의 포괄형태를 가지고 있다.
 
----
+**Template 와 Layout**
+
+- template와 layout은 얼핏보면 비슷하다고 생각할 수 있다. 두가지다 페이지에 대한 구조를 나타내는 파일이라고 볼 수 있었기 때문이다.
+
+차이점에 대해 이야기 하자면, layout은 template보다 좀더 큰 부분을 감싸는 컴포넌트이며, 고정적인 구조를 나타내기 때문에 next.js에서 재랜더링을 하지 않도록 하는 구조(레이아웃)이다.
+
+반면에, template는 layout과 반대로 재랜더링에 필요한 부분을 감싸는 영역이라고 보면된다. 따라서, layout은 재랜더링이 필요없는 header/navigation/sidebar 등등을 포함하고 있으며, 내부에 useEffect,useState와 같이 상태에 따라서 혹은 리액트라이프사이클에 따라 변화하는 컴포넌트를 가지고 있으면 된다. 결과적으로 꼭 재랜더링이 필요한 부분만 랜더링을 하게되고 그외의 고정적 구조의 부분은 재랜더링에 포함되지 않기에, 퍼포먼스 향상을 기대할 수 있다.
+
+레이아웃은 오직 한번만 실행(애니메이션)되고 재랜더링 되지 않는다.
 
 ### Fetching Data
 
@@ -187,5 +195,60 @@ There are a couple of benefits to doing the rendering work on the server, includ
 - **Client Component**
 
   - 클라이언트 JS 번들 사이즈를 줄이기 위해서 `component tree`로 나누는것을 권장.
-    - 정적 요소를 클라이언트가 아닌 서버 컴포넌트로 구성하여 사용하기.
-    -
+    - 정적 요소를 클라이언트가 아닌 서버 컴포넌트로 구성하여 사용함으로 클라이언트를 보다 빠르게 show-up하고 부담을 줄일 수 있다.
+
+**서버 컴포넌트 랜더링 이후 클라이언트 컴포넌트 랜더링**
+
+- 서버 컴포넌트에서 클라이언트 컴포넌트로 데이터 전달
+
+  - Unsupported
+
+    - 클라이언트 컴포넌트에 서버 컴포넌트를 `import`하여 해당 컴포넌트를 클라이언트 컴포넌트 내부 `return`에 삽입하여 사용하는 방식.
+    - 직접적인 `<ServerComponent/>`사용
+
+  - **Supported**
+
+    - 서버 컴포넌트를 클라이언트 컴포넌트의 `props`로 전달하여 사용하는 방식.
+
+      - 컴포넌트 사이의 `{children}`형식의 사용
+      - 클라이언트에서 해당 컴포넌트가 무엇일지 모르지만, 해당 children을 어디에 위치 시켜야 할지를 알고있다.
+
+    - 상위 서버 컴포넌트(page/layout)에서 클라이언트 컴포넌트 내부에 서버 컴포넌트를 넣어 사용할 수 있다.
+      ```js
+      return (
+        <client>
+          <server/>
+        </client>
+      ) >
+      ```
+
+- Request-Response Lifecycle
+
+  1. User Action: The user interacts with a web application. This could be clicking a link, submitting a form, or typing a URL directly into the browser's address bar.
+
+  2. HTTP Request: The client sends an HTTP request to the server that contains necessary information about what resources are being requested, what method is being used (e.g. GET, POST), and additional data if necessary.
+
+  3. Server: The server processes the request and responds with the appropriate resources. This process may take a couple of steps like routing, fetching data, etc.
+
+  4. HTTP Response: After processing the request, the server sends an HTTP response back to the client. This response contains a status code (which tells the client whether the request was successful or not) and requested resources (e.g. HTML, CSS, JavaScript, static assets, etc).
+
+  5. Client: The client parses the resources to render the user interface.
+
+  6. User Action: Once the user interface is rendered, the user can interact with it, and the whole process starts again.
+
+- Partial Prerendering (PPR)
+
+  - PPR은 정적코드와 동적코드가 같이 존재할 수 있도록 해준다.
+    - 동적(dynamic)코드를 `React Suspence`를 사용하여 fallback 기능을 활용해 prerender에 포함시킬 수 있다.
+
+  ```js
+  const nextConfig: NextConfig = {
+    experimental: {
+      ppr: 'incremental'
+    }
+  };
+  ```
+
+---
+
+Next.js /public folder can be used to serve static assets like images, fonts, and other files.

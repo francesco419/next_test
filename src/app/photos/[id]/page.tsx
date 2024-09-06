@@ -1,4 +1,4 @@
-import './style.css';
+import '../style.css';
 
 export const dynamicParams = false;
 
@@ -12,5 +12,5 @@ export default function PhotoPage({
 }: {
   params: { id: string };
 }) {
-  return <div className='card'>{id}</div>;
+  return <div className='card'>{id}photopage</div>;
 }

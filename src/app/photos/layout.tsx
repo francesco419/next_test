@@ -1,11 +1,3 @@
-'use client';
-
-import styled from 'styled-components';
-
-const LayoutContainer = styled.div`
-  height: 1000px;
-`;
-
 export default function PhotoLayout({
   children,
   modal
@@ -14,9 +6,9 @@ export default function PhotoLayout({
   modal: React.ReactNode;
 }) {
   return (
-    <LayoutContainer>
+    <>
       {children}
       {modal}
-    </LayoutContainer>
+    </>
   );
 }

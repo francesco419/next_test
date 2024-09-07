@@ -14,5 +14,9 @@ export default function ModalPage({
 }: {
   params: { id: string };
 }) {
-  return <ImperModal>{id}gdfsdfgsfgsdfg</ImperModal>;
+  return (
+    <>
+      <ImperModal>This is Modal</ImperModal>
+    </>
+  );
 }

@@ -12,5 +12,9 @@ export default function PhotoPage({
 }: {
   params: { id: string };
 }) {
-  return <div className='card'>{id}photopage</div>;
+  return (
+    <>
+      <div className='card'>This is Not Modal</div>
+    </>
+  );
 }

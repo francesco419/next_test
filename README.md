@@ -24,6 +24,18 @@
   - 탭 그룹
   - Loading / Error UI
 
+**파일구조**
+
+- App
+  - @left
+    - page.js
+  - @right
+    - page.js
+  - page.js
+  - layout.js
+
+left와 right는 parallel routes에서 사용되는 **Slot**으로서 라우트 시그먼트(주소)가 되지 않는다. 해당 slot을 사용하는 방법은, layout.js에서 `children`과 함께 props로 해당 slot을 받는다. 예를 들어, slot이 `@first`이면 layout.js의 props로 `first:React.ReactNode`를 받아 `children`과 나란히 컴포넌트로써 삽입하면 된다.
+
 ### Intercepting Routes
 
 - 현재 페이지 레이아웃에서 다른 페이지 레이아웃을 로드 할 수 있도록 하는 **스위칭** 기능.

@@ -16,6 +16,7 @@ export default function PhotoPage() {
                 margin: '0 20px 0'
               }}
               href={`/photos/${o}`}
+              key={`link_${o}`}
             >
               {o}
             </Link>

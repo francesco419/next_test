@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -10,14 +9,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children
+  children,
+  modal
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
-        <main>{children}</main>
+      <body style={{ width: '1000px', height: '1000px' }}>
+        <main>
+          {children}
+          {modal}
+        </main>
       </body>
     </html>
   );

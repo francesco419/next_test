@@ -264,3 +264,17 @@ There are a couple of benefits to doing the rendering work on the server, includ
 ---
 
 Next.js /public folder can be used to serve static assets like images, fonts, and other files.
+
+zustand
+useContext
+nextAuth
+react query
+
+////
+
+hosting
+vercel
+netlify
+aws
+
+////

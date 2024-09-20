@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from '@/app/page.module.css';
 import Link from 'next/link';
 
 export default function UsersLayout({
@@ -8,7 +7,7 @@ export default function UsersLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className={styles.main} style={{ width: '100%' }}>
+    <main style={{ width: '100%' }}>
       <header>
         <h1>header</h1>
       </header>

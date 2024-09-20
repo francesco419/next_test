@@ -1,6 +1,3 @@
-import Image from 'next/image';
-import styles from '@/app/page.module.css';
-
 export default async function Home() {
   /* const data = await new Promise(() => {
     setTimeout(() => {
@@ -9,5 +6,5 @@ export default async function Home() {
     return 'name';
   }); */
 
-  return <div className={styles.description}>Hello users : </div>;
+  return <div>Hello users : </div>;
 }

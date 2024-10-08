@@ -39,3 +39,4 @@ export default function Home() {
 }
 
 //server action file -> import in component -> action to props
+// dim for pro. 241008

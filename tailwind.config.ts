@@ -12,7 +12,8 @@ const config: Config = {
   theme: {
     extend: {
       height: {
-        '128': '32rem'
+        '128': '32rem',
+        '300': '64rem'
       }
     }
   },

@@ -1,0 +1,3 @@
+- 1011
+  - tailwind transition width problem
+    - 한정되어있는 속성을 사용하여야 하는 tailwind 특성상 config 설정을 항상 하면서 해야하는 번거로움이 있다. 기존 CSS를 사용하는 것보다 장점이 뭘까 하는 의문.

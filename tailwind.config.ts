@@ -14,6 +14,19 @@ const config: Config = {
       height: {
         '128': '32rem',
         '300': '64rem'
+      },
+      width: {
+        '128': '32rem',
+        '1500': '1500px'
+      },
+      flexGrow: {
+        2: '2',
+        1: '1'
+      },
+      transitionProperty: {
+        multiple: 'width , height , backgroundColor , border-radius',
+        width: 'width',
+        spacing: 'margin, padding'
       }
     }
   },

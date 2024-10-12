@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from 'next/image';
+import RoundBorderButton from '../buttons/roundBorderButton';
 
 export default function ViewUp({
   interiorImage,
@@ -21,7 +22,7 @@ export default function ViewUp({
     >
       <button
         onClick={() => handler(keyNumber)}
-        className='absolute w-full h-full z-50'
+        className='absolute w-full h-full z-40'
       />
       <Image
         src={interiorImage}
@@ -30,12 +31,13 @@ export default function ViewUp({
       />
       <div
         className={
-          'absolute bottom-5 left-5 flex transition duration-1000 w-max ' +
+          'absolute bottom-5 left-5 flex gap-4 transition duration-1000 w-max items-center ' +
           (handlerData === keyNumber ? 'opacity-100' : 'opacity-0')
         }
       >
-        <p className={'text-stone-50 text-3xl '}>{keyNumber} is picture</p>
-        <button className={'text-pink-600 text-3xl ml-5'}> {'>'}</button>
+        <p className={'text-stone-50 text-2xl '}>Wooden Texture</p>
+        <RoundBorderButton children={'Show Detail'} />
+        <RoundBorderButton children={'Detail Page'} />
       </div>
     </div>
   );

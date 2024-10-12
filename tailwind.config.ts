@@ -27,6 +27,10 @@ const config: Config = {
         multiple: 'width , height , backgroundColor , border-radius',
         width: 'width',
         spacing: 'margin, padding'
+      },
+      minWidth: {
+        '123': '32rem',
+        '1500': '1500px'
       }
     }
   },

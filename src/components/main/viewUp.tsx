@@ -36,8 +36,8 @@ export default function ViewUp({
         }
       >
         <p className={'text-stone-50 text-2xl '}>Wooden Texture</p>
-        <RoundBorderButton children={'Show Detail'} />
-        <RoundBorderButton children={'Detail Page'} />
+        <RoundBorderButton onClickHandler={() => {}} children={'Show Detail'} />
+        <RoundBorderButton onClickHandler={() => {}} children={'Detail Page'} />
       </div>
     </div>
   );

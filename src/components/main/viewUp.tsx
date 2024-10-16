@@ -1,5 +1,6 @@
 import Image, { StaticImageData } from 'next/image';
 import RoundBorderButton from '../buttons/roundBorderButton';
+import RoundBorderLink from '../buttons/RoundBorderLink';
 
 export default function ViewUp({
   interiorImage,
@@ -36,7 +37,11 @@ export default function ViewUp({
         }
       >
         <p className={'text-stone-50 text-2xl '}>Wooden Texture</p>
-        <RoundBorderButton onClickHandler={() => {}} children={'Show Detail'} />
+        <RoundBorderLink
+          href={`/main/1`}
+          onClickHandler={() => {}}
+          children={'Show Detail'}
+        />
         <RoundBorderButton onClickHandler={() => {}} children={'Detail Page'} />
       </div>
     </div>

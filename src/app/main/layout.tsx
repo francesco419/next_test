@@ -7,7 +7,10 @@ export default function MainLayout({
 }>) {
   return (
     <>
-      <main className='bg-black'>{children}</main>
+      <main className='bg-black'>
+        {children}
+        {modal}
+      </main>
     </>
   );
 }

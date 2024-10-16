@@ -15,14 +15,7 @@ export function Modal({ children }: { children: React.ReactNode }) {
   return (
     <div
       onClick={handleOpenChange}
-      style={{
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        height: '1000px',
-        width: '1000px',
-        backgroundColor: '#ff0000'
-      }}
+      className='fixed left-0 top-0 w-screen h-screen bg-slate-600'
     >
       {children}
     </div>

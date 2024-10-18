@@ -15,7 +15,7 @@ export function Modal({ children }: { children: React.ReactNode }) {
   return (
     <div
       onClick={handleOpenChange}
-      className='fixed left-0 top-0 w-screen h-screen bg-slate-600'
+      className='opacity-70 fixed left-0 top-0 w-screen h-screen bg-gray-500'
     >
       {children}
     </div>

@@ -3,9 +3,11 @@ import Link from 'next/link';
 
 function Linker({ to, name }: { to: string; name: string }) {
   return (
-    <Link className='mr-5' href={`/${to}`}>
-      {name}
-    </Link>
+    <>
+      <Link className='mr-5' href={`/${to}`}>
+        {name}
+      </Link>
+    </>
   );
 }
 
@@ -21,6 +23,10 @@ const linkGroup = [
   {
     to: 'main',
     name: 'Main'
+  },
+  {
+    to: 'drag',
+    name: 'Drag'
   }
 ];
 

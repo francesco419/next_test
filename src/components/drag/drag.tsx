@@ -14,7 +14,7 @@ export default function Drag() {
           return <div key={`type_${a}`}>{a}</div>;
         })}
       </div>
-      <div className='flex bg-slate-800 w-screen h-screen [&>*]:grow [&>*]:border-r-2'>
+      <div className='flex bg-slate-800 w-screen h-screen [&>*]:border-r-2'>
         {TEMP.map((a) => {
           return <DragSection num={a} key={`type_${a}`} />;
         })}

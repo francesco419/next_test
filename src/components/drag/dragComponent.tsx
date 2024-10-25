@@ -8,7 +8,7 @@ export default function DragComponent({
   return (
     <div
       key={data}
-      className='flex justify-center items-center w-full aspect-video bg-transparent bg-slate-900 box-border border-2 gap-2'
+      className='flex justify-center items-center w-80 aspect-video bg-transparent bg-slate-900 box-border border-2 gap-2'
       draggable
       onDragStart={(e) => {
         e.dataTransfer.setData('id', data);

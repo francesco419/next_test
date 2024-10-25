@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DragComponent from './dragComponent';
 import { DragEvent } from 'react';
 
@@ -6,6 +6,12 @@ export default function DragSection({ num }: { num: number }) {
   const [show, setShow] = useState<boolean>(false);
   const [stack, setStack] = useState<string[]>([]);
   const [temp, setTemp] = useState<string>();
+  const [between, setBetween] = useState<number[][]>([]);
+
+  useEffect(() => {
+    const ans = calculateBetweenBlock();
+    setBetween((between) => ans);
+  }, [stack]);
 
   const generateRandomString = (num: number) => {
     //랜덤 문자열 생성
@@ -17,6 +23,15 @@ export default function DragSection({ num }: { num: number }) {
     }
 
     return result;
+  };
+
+  const calculateBetweenBlock = () => {
+    let arr: number[][] = [];
+    stack.forEach((stack, index) => {
+      arr.push([160 * (index + 1), 160 * (index + 2)]);
+    });
+
+    return arr;
   };
 
   const stackAddHandler = () => {
@@ -58,7 +73,7 @@ export default function DragSection({ num }: { num: number }) {
 
   return (
     <div
-      className='hover:bg-slate-700'
+      className='hover:bg-slate-700 w-80'
       key={`type_${num}`}
       onMouseEnter={() => {
         setShow((show) => true);
@@ -69,6 +84,7 @@ export default function DragSection({ num }: { num: number }) {
       onDragOver={(e) => {
         e.preventDefault();
         setTemp((temp) => e.dataTransfer.getData('id'));
+        console.log(e.clientY - 100);
       }}
       onDragLeave={() => {
         setTemp((temp) => undefined);
@@ -77,13 +93,13 @@ export default function DragSection({ num }: { num: number }) {
         onDropHandler(e);
       }}
     >
-      <button
+      {/* <button
         onClick={() => {
           console.log(stack);
         }}
       >
         check
-      </button>
+      </button> */}
       {stack.map((o, index) => {
         return (
           <DragComponent data={o} func={stackDeleteHandler} key={`comp_${o}`} />
